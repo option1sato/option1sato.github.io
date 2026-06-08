@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Docwize × Oliver 不動産デモ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#185FA5;
+  --brand-700:#0F4279;
+  --brand-300:#5B97D1;
+  --navy:#0B1E33;
+  --navy-2:#102A43;
+  --oliver:#E0972E;       /* AIアクセント（温かみ） */
+  --oliver-soft:#FBEFD8;
+  --bg:#EEF2F7;
+  --surface:#FFFFFF;
+  --ink:#16222F;
+  --ink-2:#52647A;
+  --line:#E2E8F0;
+  --ok:#1F9D6B;
+  --no:#C9485B;
+  --shadow:0 18px 50px -20px rgba(11,30,51,.35);
+  --shadow-sm:0 6px 20px -10px rgba(11,30,51,.28);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:"Noto Sans JP",sans-serif;
+  background:
+    radial-gradient(1200px 600px at 85% -10%, rgba(24,95,165,.18), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(224,151,46,.12), transparent 60%),
+    var(--bg);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  display:flex;flex-direction:column;
+}
+.font-out{font-family:"Outfit",sans-serif}
+.mono{font-family:"IBM Plex Mono",monospace}
+
+/* ---------- Top bar ---------- */
+header{
+  display:flex;align-items:center;gap:18px;
+  padding:14px 28px;
+  background:linear-gradient(120deg,var(--navy),var(--navy-2));
+  color:#fff;position:sticky;top:0;z-index:30;
+  box-shadow:0 4px 30px -10px rgba(0,0,0,.5);
+}
+.brand{display:flex;align-items:center;gap:11px}
+.logo{
+  width:34px;height:34px;border-radius:9px;
+  background:linear-gradient(135deg,var(--brand-300),var(--brand));
+  display:grid;place-items:center;font-family:"Outfit";font-weight:800;font-size:19px;
+  box-shadow:0 4px 14px -4px rgba(24,95,165,.8);
+}
+.brand h1{font-family:"Outfit";font-weight:700;font-size:19px;letter-spacing:.3px}
+.brand .tag{font-size:11px;color:#9DB4CC;letter-spacing:.12em;text-transform:uppercase;margin-top:1px}
+.oliver-pill{
+  margin-left:4px;display:flex;align-items:center;gap:7px;
+  background:rgba(224,151,46,.15);border:1px solid rgba(224,151,46,.4);
+  padding:5px 11px;border-radius:999px;font-size:12px;color:#F4C57A;font-weight:500;
+}
+.oliver-dot{width:8px;height:8px;border-radius:50%;background:var(--oliver);box-shadow:0 0 0 4px rgba(224,151,46,.25);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+
+.scene-tabs{margin-left:auto;display:flex;gap:8px;background:rgba(255,255,255,.07);padding:5px;border-radius:12px}
+.scene-tabs button{
+  border:0;background:transparent;color:#B9C8DA;cursor:pointer;
+  font-family:"Noto Sans JP";font-weight:700;font-size:13px;
+  padding:9px 16px;border-radius:8px;transition:.25s;white-space:nowrap;
+}
+.scene-tabs button.active{background:#fff;color:var(--navy)}
+
+/* ---------- Layout ---------- */
+.demo-note{
+  text-align:center;font-size:11.5px;color:var(--ink-2);
+  padding:7px;background:repeating-linear-gradient(45deg,#fff7e6,#fff7e6 12px,#fdf1d6 12px,#fdf1d6 24px);
+  border-bottom:1px solid #f0e2bf;letter-spacing:.04em;
+}
+main{flex:1;display:grid;grid-template-columns:1fr 420px;gap:30px;padding:30px 34px;max-width:1320px;margin:0 auto;width:100%}
+@media(max-width:1040px){main{grid-template-columns:1fr}}
+
+/* stage */
+.stage{display:flex;align-items:flex-start;justify-content:center;min-height:600px}
+
+/* phone */
+.phone{
+  width:340px;height:712px;border-radius:46px;background:#0a0f16;
+  padding:13px;box-shadow:var(--shadow),0 0 0 2px #222 inset;position:relative;flex:none;
+}
+.phone .notch{position:absolute;top:13px;left:50%;transform:translateX(-50%);width:128px;height:26px;background:#0a0f16;border-radius:0 0 16px 16px;z-index:6}
+.screen{width:100%;height:100%;border-radius:34px;background:#EAF0F6;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.statusbar{height:40px;display:flex;align-items:center;justify-content:space-between;padding:0 24px 0 26px;font-size:12.5px;font-weight:700;color:var(--ink);flex:none}
+.statusbar .r{display:flex;gap:6px;align-items:center;font-size:11px}
+
+/* app header inside phone */
+.app-top{display:flex;align-items:center;gap:9px;padding:10px 16px;background:#fff;border-bottom:1px solid var(--line);flex:none}
+.app-top .av{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--oliver),#d07f1c);display:grid;place-items:center;color:#fff;font-weight:800;font-family:"Outfit";font-size:14px}
+.app-top .nm{font-weight:700;font-size:13.5px}
+.app-top .sub{font-size:10.5px;color:var(--ink-2)}
+
+.scr-body{flex:1;overflow-y:auto;padding:16px}
+.scr-body::-webkit-scrollbar{width:0}
+
+/* desktop frame */
+.desktop{
+  width:100%;max-width:760px;border-radius:16px;background:var(--surface);
+  box-shadow:var(--shadow);overflow:hidden;border:1px solid var(--line);
+}
+.dt-bar{display:flex;align-items:center;gap:8px;padding:11px 16px;background:#F1F5FA;border-bottom:1px solid var(--line)}
+.dt-bar .dots{display:flex;gap:6px}
+.dt-bar .dots i{width:11px;height:11px;border-radius:50%;display:block}
+.dt-url{flex:1;background:#fff;border:1px solid var(--line);border-radius:7px;padding:5px 12px;font-size:11.5px;color:var(--ink-2);font-family:"IBM Plex Mono"}
+.dt-body{padding:0;min-height:540px;display:flex}
+.dt-side{width:172px;background:var(--navy);color:#cdd9e6;padding:18px 14px;flex:none}
+.dt-side .si{display:flex;gap:9px;align-items:center;padding:9px 10px;border-radius:8px;font-size:12.5px;margin-bottom:3px}
+.dt-side .si.on{background:rgba(255,255,255,.1);color:#fff;font-weight:700}
+.dt-side .si span.ic{width:18px;text-align:center}
+.dt-main{flex:1;padding:22px 24px;overflow-y:auto;max-height:540px}
+
+/* side panel (narration) */
+.panel{background:var(--surface);border-radius:18px;box-shadow:var(--shadow-sm);border:1px solid var(--line);overflow:hidden;align-self:start;position:sticky;top:104px}
+.panel .ph{padding:16px 20px;background:linear-gradient(120deg,var(--brand),var(--brand-700));color:#fff}
+.panel .ph .step{font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.8;font-family:"Outfit";font-weight:600}
+.panel .ph h2{font-size:17px;margin-top:5px;font-weight:700;line-height:1.4}
+.panel .pb{padding:18px 20px}
+.panel .pb p{font-size:13.5px;line-height:1.85;color:var(--ink-2)}
+.panel .pb p b{color:var(--ink)}
+.flow{display:flex;flex-wrap:wrap;gap:5px;margin:14px 0 4px}
+.flow .fx{font-size:10.5px;padding:4px 9px;border-radius:6px;background:#F1F5FA;color:var(--ink-2);font-weight:500}
+.flow .fx.cur{background:var(--brand);color:#fff;font-weight:700}
+.qbox{margin-top:16px;background:var(--oliver-soft);border:1px solid #efd9a8;border-radius:12px;padding:13px 15px}
+.qbox .qt{font-size:11px;font-weight:700;color:#9a6a14;letter-spacing:.08em;display:flex;align-items:center;gap:6px;margin-bottom:7px}
+.qbox ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.qbox li{font-size:12px;color:#6b4e12;line-height:1.6;padding-left:15px;position:relative}
+.qbox li::before{content:"?";position:absolute;left:0;top:0;color:var(--oliver);font-weight:800}
+
+/* controls */
+.controls{display:flex;align-items:center;justify-content:center;gap:16px;padding:18px;background:rgba(255,255,255,.7);backdrop-filter:blur(8px);border-top:1px solid var(--line)}
+.dots-nav{display:flex;gap:8px}
+.dots-nav i{width:9px;height:9px;border-radius:50%;background:#cdd6e2;cursor:pointer;transition:.2s}
+.dots-nav i.on{background:var(--brand);transform:scale(1.25)}
+.btn{border:0;cursor:pointer;font-family:"Noto Sans JP";font-weight:700;font-size:13.5px;padding:11px 22px;border-radius:11px;transition:.2s;display:inline-flex;align-items:center;gap:7px}
+.btn-prev{background:#fff;border:1px solid var(--line);color:var(--ink-2)}
+.btn-prev:hover{border-color:var(--brand-300);color:var(--brand)}
+.btn-next{background:linear-gradient(135deg,var(--brand),var(--brand-700));color:#fff;box-shadow:0 8px 20px -8px rgba(24,95,165,.7)}
+.btn-next:hover{transform:translateY(-1px)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.step-label{font-size:12.5px;color:var(--ink-2);font-weight:700;min-width:96px;text-align:center}
+
+/* ====== reusable bubbles / cards ====== */
+.day{text-align:center;margin:8px 0 14px}
+.day span{background:rgba(0,0,0,.08);color:#5a6a7c;font-size:10.5px;padding:3px 11px;border-radius:999px}
+.bubble{max-width:78%;padding:10px 13px;border-radius:15px;font-size:13px;line-height:1.6;margin-bottom:4px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.bubble.in{background:#fff;border-top-left-radius:4px;align-self:flex-start}
+.bubble.out{background:#7ED957;border-top-right-radius:4px;align-self:flex-end;color:#0c2b00}
+.bubble.sys{background:var(--oliver-soft);border:1px solid #efd9a8;color:#6b4e12;align-self:center;max-width:90%;font-size:12px;text-align:center}
+.bmeta{font-size:9.5px;color:#90a0b0;margin:0 4px 12px}
+.chatcol{display:flex;flex-direction:column}
+
+.fab-sender{display:flex;gap:9px;align-items:center;margin-bottom:10px}
+.fab-sender .ava{width:38px;height:38px;border-radius:11px;flex:none;display:grid;place-items:center;font-weight:800;color:#fff;font-family:"Outfit"}
+
+/* Oliver notification card (lockscreen pop) */
+.lock{position:absolute;inset:0;background:linear-gradient(160deg,#1b3a5c,#0b1e33);display:flex;flex-direction:column;align-items:center;padding-top:90px;color:#fff}
+.lock .clock{font-family:"Outfit";font-size:64px;font-weight:300;letter-spacing:1px}
+.lock .date{font-size:13px;color:#aebfd0;margin-bottom:46px}
+.notif{
+  width:88%;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.18);
+  border-radius:18px;padding:14px;backdrop-filter:blur(12px);cursor:pointer;
+  animation:drop .5s cubic-bezier(.2,.9,.3,1.3);
+}
+@keyframes drop{from{opacity:0;transform:translateY(-26px)}to{opacity:1;transform:translateY(0)}}
+.notif .nh{display:flex;align-items:center;gap:8px;font-size:11px;color:#d7e2ee;margin-bottom:8px}
+.notif .nh .ic{width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,var(--oliver),#d07f1c);display:grid;place-items:center;font-size:11px;font-weight:800;font-family:"Outfit"}
+.notif .nt{font-weight:700;font-size:14px;margin-bottom:4px}
+.notif .nb{font-size:12.5px;color:#cdd9e6;line-height:1.5}
+.notif .hint{margin-top:10px;font-size:10.5px;color:#88a;text-align:center;letter-spacing:.08em}
+.tap-cue{margin-top:8px;font-size:11px;color:#7fd0ff;text-align:center;animation:pulse 1.6s infinite}
+
+/* candidate card */
+.olv-msg{background:var(--oliver-soft);border:1px solid #efd9a8;border-radius:14px;padding:12px 13px;margin-bottom:14px;font-size:12.5px;color:#6b4e12;line-height:1.6}
+.olv-msg b{color:#5a3f0c}
+.cand{background:#fff;border:1px solid var(--line);border-radius:13px;padding:12px;margin-bottom:10px;transition:.2s}
+.cand.approved{border-color:var(--ok);box-shadow:0 0 0 2px rgba(31,157,107,.15)}
+.cand.rejected{opacity:.5}
+.cand .top{display:flex;align-items:center;gap:9px}
+.cand .ava{width:36px;height:36px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:700;color:#fff;font-size:14px}
+.cand .nm{font-weight:700;font-size:13.5px}
+.cand .role{font-size:10.5px;color:var(--ink-2)}
+.match{margin-left:auto;font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px}
+.match.hi{background:#e3f6ed;color:var(--ok)}
+.match.mid{background:#fdeedd;color:#b9791c}
+.cand .why{font-size:11px;color:var(--ink-2);line-height:1.55;margin:9px 0 11px;background:#f6f9fc;padding:7px 9px;border-radius:8px}
+.cand .acts{display:flex;gap:8px}
+.cand .acts button{flex:1;border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px;font-family:"Noto Sans JP";font-weight:700;font-size:12px;cursor:pointer;transition:.15s}
+.cand .acts .ap.sel{background:var(--ok);color:#fff;border-color:var(--ok)}
+.cand .acts .rj.sel{background:var(--no);color:#fff;border-color:var(--no)}
+.cand .acts button:hover{transform:translateY(-1px)}
+
+.send-status{background:#fff;border:1px dashed var(--brand-300);border-radius:12px;padding:13px;text-align:center;font-size:12.5px;color:var(--brand-700);margin-bottom:12px}
+.sent-row{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line);border-radius:11px;padding:10px 12px;margin-bottom:8px;animation:slidein .4s both}
+@keyframes slidein{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+.sent-row .ava{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:12px;flex:none}
+.sent-row .chk{margin-left:auto;color:var(--ok);font-weight:800;font-size:16px}
+
+.reminder{background:var(--navy);color:#fff;border-radius:13px;padding:14px;margin-top:14px}
+.reminder .rt{font-size:11px;letter-spacing:.1em;color:var(--oliver);font-weight:700;margin-bottom:7px;display:flex;gap:6px;align-items:center}
+.reminder .ri{font-size:12.5px;line-height:1.6;color:#cdd9e6}
+
+/* ===== desktop / scene2 content ===== */
+.dt-h{font-family:"Outfit";font-weight:700;font-size:20px;margin-bottom:4px;color:var(--ink)}
+.dt-sub{font-size:12.5px;color:var(--ink-2);margin-bottom:20px}
+.src-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:8px}
+.src{background:#f6f9fc;border:1px solid var(--line);border-radius:11px;padding:13px;text-align:center}
+.src .n{font-family:"Outfit";font-weight:800;font-size:22px;color:var(--brand)}
+.src .l{font-size:11px;color:var(--ink-2);margin-top:2px}
+.gen-line{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--oliver);font-weight:700;margin:16px 0 6px}
+.gen-line .spin{width:14px;height:14px;border:2px solid #f0d9ab;border-top-color:var(--oliver);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.doc-card{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-sm);overflow:hidden;margin-bottom:14px}
+.doc-card .dc-h{display:flex;align-items:center;gap:8px;padding:11px 14px;border-bottom:1px solid var(--line);background:#fafcfe}
+.doc-card .dc-h .tg{font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--brand);color:#fff}
+.doc-card .dc-h .ti{font-weight:700;font-size:13px}
+.doc-card .dc-h .auto{margin-left:auto;font-size:10.5px;color:var(--oliver);font-weight:700;display:flex;gap:4px;align-items:center}
+.doc-card .dc-b{padding:14px}
+.docline{font-size:12px;line-height:1.5;padding:7px 0;border-bottom:1px dashed #eef2f6;display:flex;gap:10px}
+.docline:last-child{border:0}
+.docline .k{color:var(--ink-2);width:118px;flex:none}
+.docline .v{color:var(--ink);font-weight:500}
+.docline .auto-tag{font-size:9px;background:#eaf2fb;color:var(--brand);padding:1px 6px;border-radius:5px;align-self:center;margin-left:auto;font-weight:700}
+
+.issue{display:flex;gap:10px;padding:11px 13px;border:1px solid var(--line);border-left:3px solid var(--oliver);border-radius:9px;margin-bottom:9px;background:#fff}
+.issue .ico{color:var(--oliver);font-weight:800;font-size:15px}
+.issue .it{font-weight:700;font-size:12.5px;margin-bottom:3px}
+.issue .id{font-size:11.5px;color:var(--ink-2);line-height:1.55}
+
+.risk{display:flex;gap:10px;padding:11px 13px;border:1px solid #f3d4d9;border-left:3px solid var(--no);border-radius:9px;margin-bottom:9px;background:#fef8f9}
+.risk .ico{color:var(--no);font-weight:800;font-size:15px}
+.risk .it{font-weight:700;font-size:12.5px;margin-bottom:3px;color:#8f2233}
+.risk .id{font-size:11.5px;color:#7a4650;line-height:1.55}
+.risk .ref{font-size:10px;color:#b06; margin-top:5px;font-family:"IBM Plex Mono"}
+
+.wf{display:flex;flex-direction:column;gap:0}
+.wf-step{display:flex;gap:13px;position:relative;padding-bottom:18px}
+.wf-step:not(:last-child)::before{content:"";position:absolute;left:15px;top:34px;bottom:-2px;width:2px;background:var(--line)}
+.wf-step .dot{width:32px;height:32px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:800;font-size:13px;z-index:1}
+.wf-step .dot.done{background:var(--ok);color:#fff}
+.wf-step .dot.now{background:var(--brand);color:#fff;box-shadow:0 0 0 5px rgba(24,95,165,.18)}
+.wf-step .dot.wait{background:#e4ebf2;color:#9aa9b8}
+.wf-step .wc .wt{font-weight:700;font-size:13px}
+.wf-step .wc .ws{font-size:11.5px;color:var(--ink-2);line-height:1.55;margin-top:2px}
+.wf-step .wc .evid{margin-top:7px;display:flex;flex-wrap:wrap;gap:5px}
+.wf-step .wc .evid span{font-size:9.5px;background:#eef4fa;color:var(--brand-700);padding:3px 7px;border-radius:5px;font-weight:600}
+
+.done-banner{text-align:center;padding:30px 16px}
+.done-banner .seal{width:78px;height:78px;border-radius:50%;background:linear-gradient(135deg,var(--ok),#0f7a4f);display:grid;place-items:center;margin:0 auto 16px;color:#fff;font-size:38px;box-shadow:0 12px 30px -10px rgba(31,157,107,.6)}
+.done-banner h3{font-family:"Outfit";font-size:21px;margin-bottom:8px}
+.done-banner p{font-size:13px;color:var(--ink-2);line-height:1.7;max-width:440px;margin:0 auto}
+.kpi{display:flex;gap:12px;justify-content:center;margin-top:22px}
+.kpi .k{background:#f6f9fc;border:1px solid var(--line);border-radius:12px;padding:13px 18px;min-width:120px}
+.kpi .k .v{font-family:"Outfit";font-weight:800;font-size:22px;color:var(--brand)}
+.kpi .k .v small{font-size:13px}
+.kpi .k .l{font-size:10.5px;color:var(--ink-2);margin-top:3px}
+
+.fade{animation:fade .45s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="logo font-out">D</div>
+    <div>
+      <h1 class="font-out">Docwize</h1>
+      <div class="tag">Real Estate</div>
+    </div>
+  </div>
+  <div class="oliver-pill"><span class="oliver-dot"></span>AI Assistant&nbsp;<b style="font-family:Outfit">Oliver</b></div>
+  <div class="scene-tabs">
+    <button id="tab1" class="active" onclick="setScene('s1')">シチュエーション 1<br><span style="font-weight:400;font-size:10px;opacity:.8">営業チャンスのタイムリーサポート</span></button>
+    <button id="tab2" onclick="setScene('s2')">シチュエーション 2<br><span style="font-weight:400;font-size:10px;opacity:.8">契約書作成時のサポート</span></button>
+  </div>
+</header>
+
+<div class="demo-note">これはコンセプト検証用のデモ（モック）です ／ 実データではありません ／ 画面はイメージです</div>
+
+<main>
+  <div class="stage" id="stage"></div>
+
+  <aside class="panel">
+    <div class="ph">
+      <div class="step font-out" id="pStep">STEP 1 / 6</div>
+      <h2 id="pTitle">タイトル</h2>
+    </div>
+    <div class="pb">
+      <p id="pBody">説明</p>
+      <div class="flow" id="pFlow"></div>
+      <div class="qbox">
+        <div class="qt">レビュー協力者へのヒアリング</div>
+        <ul id="pQ"></ul>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<div class="controls">
+  <button class="btn btn-prev" id="btnPrev" onclick="go(-1)">◀ 戻る</button>
+  <div class="dots-nav" id="dotsNav"></div>
+  <span class="step-label" id="stepLabel"></span>
+  <button class="btn btn-next" id="btnNext" onclick="go(1)">次へ ▶</button>
+</div>
+
+<script>
+/* ================= DATA ================= */
+const candidates = [
+  {id:'c1', nm:'佐藤 健一 様', role:'個人 / 自己居住', color:'#185FA5', match:'hi',
+   why:'半年前から中央区で3LDKを探索中。希望条件・予算（〜5,500万）と合致。先週も内見希望あり。'},
+  {id:'c2', nm:'株式会社グロース', role:'法人 / 投資用', color:'#0F4279', match:'mid',
+   why:'区分マンションを複数検討中。利回り重視で、想定価格・立地が投資基準にマッチ。'},
+  {id:'c3', nm:'鈴木 美咲 様', role:'個人 / 住み替え', color:'#5B97D1', match:'hi',
+   why:'現居の売却と同時購入を希望。エリア・間取りの希望条件が今回の案件と一致。'},
+];
+
+const flow1 = ['①情報共有','②AI通知','③候補提示','④承認/否認','⑤自動転送','⑥フォロー'];
+const flow2 = ['①原案作成','②論点整理','③留意点','④書類作成','⑤レビュー','⑥完成'];
+
+const scene1 = [
+  {title:'情報提供者から非公式な情報共有',
+   body:'提携先の<b>山本工務店</b>から、営業担当の田中さんに<b>LINEで売却案件の一報</b>が入りました。こうした「まだ表に出ていない」情報こそ、スピードが命です。',
+   q:['こうした非公式情報は普段どの経路（LINE / 電話 / 対面）で来ますか？','受け取ってから動き出すまで、今は何分・何時間かかっていますか？']},
+  {title:'Oliverがスマホに即時ポップアップ通知',
+   body:'LINEの文面を<b>Oliverが自動で解析</b>し、「売却案件」と判定。田中さんのスマホに通知を出します。<b>通知をタップ</b>すると候補提示に進みます。',
+   q:['移動中・接客中でも気づける通知のかたちが理想ですか？','「売却/購入/その他」の自動判定はどの程度の精度を求めますか？']},
+  {title:'「この方々に展開しますか？」候補を提示',
+   body:'Oliverが顧客データベースを照合し、<b>この案件に関心が高い顧客を自動抽出</b>。マッチ理由つきで提示します。',
+   q:['顧客の「関心度」はどんな情報から判断してほしいですか？','普段、案件が来たとき頭に浮かぶ顧客は何名くらいですか？']},
+  {title:'営業マンがスマホで承認 / 否認',
+   body:'各候補の<b>［承認］［否認］をタップ</b>してみてください。承認した相手にだけ情報が展開されます。指先ひとつで取捨選択できます。',
+   q:['この場面で「迷う」要素は何ですか？（相性・タイミング・過去の経緯など）','一括承認ボタンはあったほうが良いですか？']},
+  {title:'承認先へテンプレートで自動転送',
+   body:'承認された相手に、<b>定型テンプレートで一斉に情報を転送</b>。文面はOliverが整え、提供者が特定されない表現に自動調整します。',
+   q:['転送文面は会社の定型に合わせて固定したいですか？','物件の何の情報まで初回で出してよいですか？']},
+  {title:'対象者が受信、手が空いたらフォロー',
+   body:'顧客は情報を受信。<b>Oliverは田中さんに「フォロー連絡」をリマインド</b>します。動きを逃さず、後追いも自動でサポート。',
+   q:['受信後の顧客の反応（既読/返信）も追えると嬉しいですか？','フォローのリマインドはどのタイミングが適切ですか？']},
+];
+
+const scene2 = [
+  {title:'履歴から契約書・重説の原案を自動作成',
+   body:'2年来のお客様<b>高橋様</b>に、ついに希望物件が決定。Oliverが<b>メール・LINE・CRMの全履歴を読み込み</b>、契約書と重要事項説明書の原案を自動生成します。',
+   q:['過去の履歴は、現状どこに散らばっていますか？','原案のたたき台があると、作成時間はどのくらい変わりそうですか？']},
+  {title:'原案＋残論点（確認事項）を整理',
+   body:'Oliverは原案だけでなく、<b>「まだ決まっていない／確認が必要な論点」</b>も同時に洗い出します。埋めるべき空欄が一目でわかります。',
+   q:['契約直前に「抜け・漏れ」でヒヤッとした経験はありますか？','確認事項のチェックリストは、社内で標準化されていますか？']},
+  {title:'類似契約からトラブル回避の留意点を提示',
+   body:'過去の類似契約を参照し、<b>トラブルになりやすいポイントを先回りで警告</b>。経験の浅い担当でもベテランの勘所を再現できます。',
+   q:['過去に実際あったトラブル・クレームの典型例は？','こうした「留意点の自動提示」はどの場面で一番効きますか？']},
+  {title:'営業マンが内容を確認し書類を作成',
+   body:'Oliverの原案・論点・留意点をもとに、<b>担当者は確認と微修正だけ</b>。ゼロから書く作業がなくなり、判断業務に集中できます。',
+   q:['最終的な文面の「決定権」は誰が持つべきですか？','AIの原案にどこまで任せられそうですか？']},
+  {title:'社内ワークフローでレビューを実施',
+   body:'Docwize経由で<b>レビュー依頼を起票</b>。レビュワーは<b>記載の根拠となる履歴素材とセット</b>で確認できるため、「なぜこの条件か」が即わかります。',
+   q:['今、契約書のダブルチェックは誰が・どう行っていますか？','レビューが滞留する原因は何ですか？']},
+  {title:'契約書・重要事項説明書が完成',
+   body:'レビュー完了。<b>根拠が紐づいた状態で書類が確定</b>します。属人化を解消し、品質とスピードを両立。これがOliverの提供価値です。',
+   q:['この一連の流れで、最も価値を感じる工程はどこですか？','現状比で、1契約あたり何時間の削減を期待しますか？']},
+];
+
+/* ================= STATE ================= */
+let scene='s1', idx=0;
+const approvals={}; // candidate -> 'ap'/'rj'
+let notifTapped=false;
+
+/* ================= RENDER ================= */
+function setScene(s){
+  scene=s; idx=0; notifTapped=false;
+  document.getElementById('tab1').classList.toggle('active',s==='s1');
+  document.getElementById('tab2').classList.toggle('active',s==='s2');
+  render();
+}
+function go(d){
+  // gate: scene1 step2 requires tapping notification
+  const max=(scene==='s1'?scene1:scene2).length-1;
+  if(scene==='s1' && idx===1 && d>0 && !notifTapped){ return; }
+  idx=Math.max(0,Math.min(max,idx+d));
+  render();
+}
+
+function render(){
+  const data = scene==='s1'?scene1:scene2;
+  const flow = scene==='s1'?flow1:flow2;
+  const s=data[idx];
+  // panel
+  document.getElementById('pStep').textContent=`STEP ${idx+1} / ${data.length}`;
+  document.getElementById('pTitle').textContent=s.title;
+  document.getElementById('pBody').innerHTML=s.body;
+  document.getElementById('pFlow').innerHTML=flow.map((f,i)=>`<span class="fx ${i===idx?'cur':''}">${f}</span>`).join('');
+  document.getElementById('pQ').innerHTML=s.q.map(q=>`<li>${q}</li>`).join('');
+  // dots
+  document.getElementById('dotsNav').innerHTML=data.map((_,i)=>`<i class="${i===idx?'on':''}" onclick="idx=${i};render()"></i>`).join('');
+  document.getElementById('stepLabel').textContent=`${idx+1} / ${data.length}`;
+  document.getElementById('btnPrev').disabled=(idx===0);
+  document.getElementById('btnNext').disabled=(idx===data.length-1) || (scene==='s1'&&idx===1&&!notifTapped);
+  document.getElementById('btnNext').textContent = (idx===data.length-1)?'完了 ✓':'次へ ▶';
+  // stage
+  document.getElementById('stage').innerHTML = scene==='s1'?renderPhone():renderDesktop();
+}
+
+/* ---------- SCENE 1 : phone ---------- */
+function phoneShell(inner, lock){
+  return `<div class="phone"><div class="notch"></div><div class="screen">
+    ${lock?'':`<div class="statusbar"><span>9:41</span><span class="r">5G ▮▮▮ &nbsp;87%</span></div>`}
+    ${inner}
+  </div></div>`;
+}
+function renderPhone(){
+  if(idx===0){ // LINE incoming
+    return phoneShell(`
+      <div class="app-top">
+        <div class="av" style="background:#06C755;font-size:13px">LINE</div>
+        <div><div class="nm">山本工務店 山本さん</div><div class="sub">提携先 / 情報提供者</div></div>
+      </div>
+      <div class="scr-body fade chatcol" style="background:#9bbdd6">
+        <div class="day"><span>本日 14:32</span></div>
+        <div class="bubble in">田中さん、お疲れ様です。<br>中央区の笹丘で売却案件が出そうです👀</div>
+        <div class="bubble in">グランドメゾン笹丘の3LDK（72㎡・築12年）<br>オーナーさんが住み替えで、5,200万くらいで考えてるみたいです。</div>
+        <div class="bubble in">まだ表に出してないので、動ける人いたら早めに！</div>
+        <div class="bmeta" style="align-self:flex-start">14:32</div>
+      </div>`);
+  }
+  if(idx===1){ // Oliver lockscreen notification
+    return phoneShell(`
+      <div class="lock">
+        <div class="clock font-out">14:33</div>
+        <div class="date">6月8日 月曜日</div>
+        <div class="notif fade" onclick="tapNotif()">
+          <div class="nh"><span class="ic">O</span>Oliver · たった今</div>
+          <div class="nt">売却案件の情報が入りました</div>
+          <div class="nb">情報提供者（山本工務店）から「グランドメゾン笹丘 3LDK / 想定5,200万」の<b>売却案件</b>を検知しました。関心が高そうな顧客を抽出済みです。</div>
+          ${notifTapped?'<div class="hint" style="color:#7ED957">✓ 開きました — 「次へ」で続けてください</div>':'<div class="tap-cue">▲ 通知をタップしてください</div>'}
+        </div>
+      </div>`, true);
+  }
+  if(idx===2 || idx===3){ // candidate list + approve/reject
+    const interactive = (idx===3);
+    return phoneShell(`
+      <div class="app-top">
+        <div class="av">O</div>
+        <div><div class="nm">Oliver</div><div class="sub">${interactive?'承認 / 否認を選んでください':'候補を提示しました'}</div></div>
+      </div>
+      <div class="scr-body fade">
+        <div class="olv-msg">📍 <b>グランドメゾン笹丘</b>（中央区・3LDK・72㎡・想定5,200万）<br>この方々に情報を展開するのはいかがでしょうか？</div>
+        ${candidates.map(c=>{
+          const st=approvals[c.id]||'';
+          const cls=st==='ap'?'approved':(st==='rj'?'rejected':'');
+          return `<div class="cand ${cls}" id="cd_${c.id}">
+            <div class="top">
+              <div class="ava" style="background:${c.color}">${c.nm[0]}</div>
+              <div><div class="nm">${c.nm}</div><div class="role">${c.role}</div></div>
+              <div class="match ${c.match}">${c.match==='hi'?'マッチ度 高':'マッチ度 中'}</div>
+            </div>
+            <div class="why">💡 ${c.why}</div>
+            <div class="acts">
+              <button class="ap ${st==='ap'?'sel':''}" ${interactive?`onclick="setApp('${c.id}','ap')"`:'disabled'}>${st==='ap'?'✓ 承認':'承認'}</button>
+              <button class="rj ${st==='rj'?'sel':''}" ${interactive?`onclick="setApp('${c.id}','rj')"`:'disabled'}>${st==='rj'?'✕ 否認':'否認'}</button>
+            </div>
+          </div>`;
+        }).join('')}
+        ${interactive?'':'<div style="text-align:center;font-size:11px;color:#90a0b0;margin-top:6px">「次へ」で承認/否認の操作に進みます</div>'}
+      </div>`);
+  }
+  if(idx===4){ // auto-forward
+    const appd=candidates.filter(c=>approvals[c.id]==='ap');
+    const list = appd.length?appd:candidates.filter(c=>c.match==='hi'); // fallback if user skipped
+    return phoneShell(`
+      <div class="app-top">
+        <div class="av">O</div>
+        <div><div class="nm">Oliver</div><div class="sub">自動転送 中…</div></div>
+      </div>
+      <div class="scr-body fade">
+        <div class="send-status">📤 承認された <b>${list.length}名</b> にテンプレートで情報を転送しました</div>
+        <div class="olv-msg" style="font-size:11.5px">送信文面（自動生成・提供者名は非開示）：<br><span style="color:#5a3f0c">「中央区エリアで、ご希望に近い中古マンション（3LDK / 72㎡）の情報が入りました。ご関心あればご内見の調整をいたします。」</span></div>
+        ${list.map((c,i)=>`<div class="sent-row" style="animation-delay:${i*0.15}s">
+          <div class="ava" style="background:${c.color}">${c.nm[0]}</div>
+          <div><div style="font-weight:700;font-size:12.5px">${c.nm}</div><div style="font-size:10.5px;color:#90a0b0">テンプレート送信済み</div></div>
+          <div class="chk">✓</div>
+        </div>`).join('')}
+      </div>`);
+  }
+  if(idx===5){ // recipient receives + reminder
+    return phoneShell(`
+      <div class="app-top">
+        <div class="av" style="background:#06C755;font-size:13px">LINE</div>
+        <div><div class="nm">お願い！不動産（公式）</div><div class="sub">佐藤様 受信画面</div></div>
+      </div>
+      <div class="scr-body fade chatcol" style="background:#9bbdd6">
+        <div class="day"><span>14:35</span></div>
+        <div class="bubble in">佐藤様、お世話になっております。<br>中央区エリアで、ご希望に近い中古マンション（3LDK / 72㎡）の情報が入りました🏠</div>
+        <div class="bubble in">ご関心あればご内見の調整をいたします。</div>
+        <div class="bubble out">ぜひ見たいです！週末空いてますか？</div>
+        <div class="bmeta" style="align-self:flex-end">既読 14:38</div>
+        <div class="reminder">
+          <div class="rt">🔔 Oliver → 田中さんへリマインド</div>
+          <div class="ri">佐藤様から<b>内見希望の返信</b>がありました。手が空いたタイミングでフォロー連絡をお願いします。<br>（鈴木様は未読 / グロース社は検討中）</div>
+        </div>
+      </div>`);
+  }
+}
+function tapNotif(){ notifTapped=true; render(); }
+function setApp(id,v){ approvals[id]=(approvals[id]===v?'':v); render(); }
+
+/* ---------- SCENE 2 : desktop ---------- */
+function deskShell(side,inner){
+  const nav=[['📄','契約書 / 重説',side===0],['📑','確認事項',side===1],['⚠️','留意点',side===2],['🔍','レビュー',side>=4]];
+  return `<div class="desktop"><div class="dt-bar">
+      <div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
+      <div class="dt-url">app.docwize.jp / deals / 高橋様 — 平尾テラス 6,480万</div>
+    </div>
+    <div class="dt-body">
+      <div class="dt-side">
+        <div style="font-family:Outfit;font-weight:700;font-size:13px;margin-bottom:14px;color:#fff">案件ワークスペース</div>
+        ${nav.map(n=>`<div class="si ${n[2]?'on':''}"><span class="ic">${n[0]}</span>${n[1]}</div>`).join('')}
+        <div style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);font-size:10.5px;color:#8aa">担当：田中 / お客様：高橋 浩二 様<br>問い合わせ：2024年6月（2年前）</div>
+      </div>
+      <div class="dt-main fade">${inner}</div>
+    </div></div>`;
+}
+function renderDesktop(){
+  if(idx===0){
+    return deskShell(0,`
+      <div class="dt-h">契約書・重要事項説明書ドラフト</div>
+      <div class="dt-sub">Oliverが過去2年間の全やり取りを読み込み、原案を生成しています。</div>
+      <div class="src-grid">
+        <div class="src"><div class="n">38</div><div class="l">メール</div></div>
+        <div class="src"><div class="n">156</div><div class="l">LINEメッセージ</div></div>
+        <div class="src"><div class="n">12</div><div class="l">CRM商談履歴</div></div>
+      </div>
+      <div class="gen-line"><span class="spin"></span>履歴を解析して原案を作成中…</div>
+      <div class="doc-card">
+        <div class="dc-h"><span class="tg">原案</span><span class="ti">不動産売買契約書（ドラフト）</span><span class="auto">⦿ Oliver自動生成</span></div>
+        <div class="dc-b">
+          <div class="docline"><span class="k">売主</span><span class="v">株式会社●●（前回紹介時に確認済）</span><span class="auto-tag">CRM</span></div>
+          <div class="docline"><span class="k">買主</span><span class="v">高橋 浩二 様</span><span class="auto-tag">CRM</span></div>
+          <div class="docline"><span class="k">物件</span><span class="v">平尾テラス（中央区平尾 / 4LDK / 中古戸建）</span><span class="auto-tag">メール</span></div>
+          <div class="docline"><span class="k">売買代金</span><span class="v">6,480万円</span><span class="auto-tag">LINE</span></div>
+          <div class="docline"><span class="k">引渡希望</span><span class="v">2026年9月末（お子様の転校時期に合わせ）</span><span class="auto-tag">LINE</span></div>
+        </div>
+      </div>`);
+  }
+  if(idx===1){
+    return deskShell(1,`
+      <div class="dt-h">残論点 — 確認が必要な事項</div>
+      <div class="dt-sub">原案で確定できなかった項目をOliverが抽出しました。埋めるべき空欄が一目でわかります。</div>
+      <div class="issue"><div class="ico">!</div><div><div class="it">境界確定の有無</div><div class="id">隣地との境界確定測量が未実施の可能性。確定測量図の有無を売主に要確認。</div></div></div>
+      <div class="issue"><div class="ico">!</div><div><div class="it">住宅ローン特約の期日</div><div class="id">高橋様は融資利用予定。ローン特約の解除期限を契約日から起算して設定が必要。</div></div></div>
+      <div class="issue"><div class="ico">!</div><div><div class="it">契約不適合責任の範囲・期間</div><div class="id">中古戸建のため、責任範囲と期間（引渡後3ヶ月等）を売主と協議のうえ明記。</div></div></div>
+      <div class="issue"><div class="ico">!</div><div><div class="it">手付金の額</div><div class="id">代金の5〜10%が一般的。金額・支払日が履歴上で未確定。</div></div></div>`);
+  }
+  if(idx===2){
+    return deskShell(2,`
+      <div class="dt-h">トラブル回避のための留意点</div>
+      <div class="dt-sub">過去の類似契約（中央区・中古戸建・個人売主）から、トラブルになりやすい点を先回りで提示します。</div>
+      <div class="risk"><div class="ico">⚠</div><div><div class="it">越境物の見落とし</div><div class="id">類似案件でブロック塀・庭木の越境が引渡後に判明。覚書での処理を推奨。</div><div class="ref">参照：2024-契約#0312（同エリア戸建）</div></div></div>
+      <div class="risk"><div class="ico">⚠</div><div><div class="it">給湯器・設備の経年劣化</div><div class="id">築年数的に設備故障クレームのリスク。付帯設備表での「故障・不具合」明記が必須。</div><div class="ref">参照：2023-契約#0188</div></div></div>
+      <div class="risk"><div class="ico">⚠</div><div><div class="it">ハザード（浸水想定）の説明</div><div class="id">平尾エリアは一部浸水想定区域。重説への記載漏れは説明義務違反のリスク。</div><div class="ref">参照：不動産情報ライブラリ 防災データ</div></div></div>`);
+  }
+  if(idx===3){
+    return deskShell(0,`
+      <div class="dt-h">担当者による確認・最終調整</div>
+      <div class="dt-sub">Oliverの原案・論点・留意点を反映。担当者は確認と微修正だけで書類が整います。</div>
+      <div class="doc-card">
+        <div class="dc-h"><span class="tg" style="background:var(--ok)">確認済</span><span class="ti">重要事項説明書（確定前）</span><span class="auto">担当：田中</span></div>
+        <div class="dc-b">
+          <div class="docline"><span class="k">境界確定</span><span class="v">確定測量図あり（売主提供）✓</span><span class="auto-tag" style="background:#e3f6ed;color:var(--ok)">解消</span></div>
+          <div class="docline"><span class="k">ローン特約</span><span class="v">契約日から45日以内</span><span class="auto-tag" style="background:#e3f6ed;color:var(--ok)">解消</span></div>
+          <div class="docline"><span class="k">契約不適合責任</span><span class="v">引渡後3ヶ月（雨漏り・シロアリ・給排水）</span><span class="auto-tag" style="background:#e3f6ed;color:var(--ok)">解消</span></div>
+          <div class="docline"><span class="k">手付金</span><span class="v">324万円（代金の5%）</span><span class="auto-tag" style="background:#e3f6ed;color:var(--ok)">解消</span></div>
+          <div class="docline"><span class="k">越境物</span><span class="v">隣地ブロック塀につき覚書を別途締結</span><span class="auto-tag" style="background:#fdeedd;color:#b9791c">留意反映</span></div>
+          <div class="docline"><span class="k">ハザード</span><span class="v">浸水想定区域（最大0.5〜3m）を明記</span><span class="auto-tag" style="background:#fdeedd;color:#b9791c">留意反映</span></div>
+        </div>
+      </div>`);
+  }
+  if(idx===4){
+    return deskShell(4,`
+      <div class="dt-h">社内ワークフローでレビュー</div>
+      <div class="dt-sub">Docwize経由でレビュー依頼を起票。レビュワーは記載の根拠素材とセットで確認できます。</div>
+      <div class="wf">
+        <div class="wf-step"><div class="dot done">1</div><div class="wc"><div class="wt">田中（担当）が書類を提出</div><div class="ws">契約書・重説ドラフトをレビュー依頼として起票。</div></div></div>
+        <div class="wf-step"><div class="dot now">2</div><div class="wc"><div class="wt">宅建士・上長がレビュー中</div><div class="ws">各条項について、根拠となる履歴・公的データを参照しながら正当性を確認。</div>
+          <div class="evid"><span>📧 売主合意メール</span><span>💬 高橋様 LINE履歴</span><span>📐 確定測量図</span><span>🌊 ハザードデータ</span></div></div></div>
+        <div class="wf-step"><div class="dot wait">3</div><div class="wc"><div class="wt">承認・差戻し</div><div class="ws">指摘があれば該当箇所にコメントを付けて差戻し。修正もOliverが補助。</div></div></div>
+      </div>
+      <div class="olv-msg" style="margin-top:14px">💡 <b>ポイント：</b>レビュワーは「なぜこの条件になったのか」を、元の履歴に遡って即座に確認できます。属人的な口頭引き継ぎが不要になります。</div>`);
+  }
+  if(idx===5){
+    return deskShell(5,`
+      <div class="done-banner">
+        <div class="seal">✓</div>
+        <h3 class="font-out">契約書・重要事項説明書が完成</h3>
+        <p>2年間の履歴に基づく原案作成から、論点整理・トラブル回避・社内レビューまで。<b>根拠が紐づいた状態</b>で書類が確定しました。</p>
+        <div class="kpi">
+          <div class="k"><div class="v">3〜5h<small> →</small> 30m</div><div class="l">重説作成にかかる時間</div></div>
+          <div class="k"><div class="v">100<small>%</small></div><div class="l">根拠の追跡可能性</div></div>
+          <div class="k"><div class="v">脱<small></small></div><div class="l">属人化・抜け漏れ</div></div>
+        </div>
+      </div>`);
+  }
+}
+
+render();
+</script>
+</body>
+</html>
